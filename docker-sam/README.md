@@ -11,22 +11,22 @@ An example of running a [TypeScript](https://www.typescriptlang.org/) NodeJS [AW
 
 ### Building Development Environment
 ```
-./bin/build.sh
+bin/build.sh
 ```
 
 ### Running Development Environment
 Compile TypeScript source (`src`) into ES6 compatible JavaScript (`dist`) for an AWS Lambda Node.js 8.10 environment:
 ```
-./bin/compile.sh
+bin/compile.sh
 ```
 
 Start AWS Lambda Node.js 8.10 Emulator:
 ```
-./bin/start.sh
+bin/start.sh
 ```
 
 Invoking AWS Lambda running in Emulator:
 
 ```
-echo '{"name":"sample event", "version": "1.0"}' | ./bin/invoke.sh
+cat example/example.json | bin/invoke.sh
 ```
