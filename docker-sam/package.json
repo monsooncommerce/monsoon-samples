@@ -3,10 +3,9 @@
   "description": "Dockerized SAM",
   "main": "index.js",
   "scripts": {
-    "tsc": "tsc --build"
+    "tsc": "tsc"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.13",
     "@types/node": "^10.11.4",
     "typescript": "^3.1.1"
   }

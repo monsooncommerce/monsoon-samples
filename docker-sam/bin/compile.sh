@@ -6,7 +6,7 @@ CMD=$(cat <<'SH'
 mkdir -p dist &&
 cp src/template.yaml dist &&
 npm install &&
-npm run tsc --project tsconfig.json
+npm run tsc
 SH
 )
 
