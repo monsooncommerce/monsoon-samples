@@ -7,4 +7,4 @@ const handler: Handler = (event: any, context: Context, callback: Callback): voi
   callback(null, xml);
 };
 
-export { handler  }
+export { handler }
