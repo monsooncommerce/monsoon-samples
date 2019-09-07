@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  AwsNamespace:
+    Type: String
+    Description: Used to generate namespaced AWS resources
+
+  NodeEnv:
+    Type: String
+    Description: Node.js Environment.
+    Default: production
+
+  ServiceTwoStream:
+    Type: String
+    Description: Service Two Kinesis Stream.
+
+Resources:
+  ServiceOneFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AwsNamespace}-service-one
+      Handler: dist/index.handler
+      Runtime: nodejs8.10
+      CodeUri: ./
+      Environment:
+        Variables:
+          AWS_NAMESPACE: !Sub ${AwsNamespace}
+          NODE_ENV: !Sub ${NodeEnv}
+          SERVICE_TWO_STREAM: !Sub ${ServiceTwoStream}
+      Policies:
+        - Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - "kinesis:PutRecord"
+                - "kinesis:PutRecords"
+              Resource: '*'

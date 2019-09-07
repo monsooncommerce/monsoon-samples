@@ -1,0 +1,85 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  AwsNamespace:
+    Type: String
+    Description: Used to generate namespaced AWS resources
+
+  NodeEnv:
+    Type: String
+    Description: Node.js Environment.
+    Default: production
+
+  GitBuildBranchFilter:
+    Type: String
+    Description: Git Build Branch Filter.
+
+  GitDeployBranchFilter:
+    Type: String
+    Description: Git Deploy Branch Filter.
+
+  ServiceTwoStream:
+    Type: String
+    Description: Service Two Kinesis Stream.
+
+Resources:
+  CodeBuildRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+          RoleName: !Sub ${AwsNamespace}-service-one-codebuild
+          Policies:
+            - PolicyName: CodeBuildAccess
+              PolicyDocument:
+                Version: '2012-10-17'
+                Statement:
+                  - Action:
+                    - 'logs:*'
+                    - 's3:*'
+                    - 'cloudformation:*'
+                    - 'lambda:*'
+                    Effect: Allow
+                    Resource: '*'
+          AssumeRolePolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                -
+                  Effect: "Allow"
+                  Principal:
+                    Service:
+                      - "codebuild.amazonaws.com"
+                  Action:
+                    - "sts:AssumeRole"
+
+  CodeBuild:
+      Type: "AWS::CodeBuild::Project"
+      DependsOn:
+        - CodeBuildRole
+      Properties:
+          Artifacts:
+              Type: NO_ARTIFACTS
+          Environment:
+              ComputeType: BUILD_GENERAL1_SMALL
+              Image: aws/codebuild/docker:17.09.0
+              Type: LINUX_CONTAINER
+              EnvironmentVariables:
+                  - Name: AWS_NAMESPACE
+                    Value: !Sub ${AwsNamespace}
+                  - Name: NODE_ENV
+                    Value: !Sub ${NodeEnv}
+                  - Name: GIT_BUILD_BRANCH_FILTER
+                    Value: !Sub ${GitBuildBranchFilter}
+                  - Name: GIT_DEPLOY_BRANCH_FILTER
+                    Value: !Sub ${GitDeployBranchFilter}
+                  - Name: SERVICE_TWO_STREAM
+                    Value: !Sub ${ServiceTwoStream}
+          Name: !Sub ${AwsNamespace}-service-one
+          ServiceRole: !GetAtt CodeBuildRole.Arn
+          Source:
+              Type: GITHUB
+              Location: https://github.com/monsooncommerce/monsoon-samples.git
+              BuildSpec: codebuild-monorepo/service-one/cloudformation/buildspec.yml
+              ReportBuildStatus: true
+          Triggers:
+            Webhook: true
+          TimeoutInMinutes: 15
+          BadgeEnabled: true

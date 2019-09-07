@@ -1,0 +1,16 @@
+version: 0.2
+
+env:
+  variables:
+    AWS_NAMESPACE: $AWS_NAMESPACE
+    SUBPROJECT_NAME: service-one
+    GIT_BUILD_BRANCH_FILTER: $GIT_BUILD_BRANCH_FILTER
+    GIT_DEPLOY_BRANCH_FILTER: $GIT_DEPLOY_BRANCH_FILTER
+
+phases:
+  pre_build:
+    commands:
+      - service-one/cloudformation/buildspec_prebuild.sh
+  post_build:
+    commands:
+      - service-one/cloudformation/buildspec_postbuild.sh

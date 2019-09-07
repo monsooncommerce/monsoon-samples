@@ -1,0 +1,16 @@
+version: '3.6'
+
+services:
+  lambda_npm_app:
+    image: lambci/lambda:build-nodejs8.10
+    volumes:
+      - .:/var/task
+
+  sam_app:
+    build: .
+    command: ["$PWD"]
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/app
+      - /var/run/docker.sock:/var/run/docker.sock
