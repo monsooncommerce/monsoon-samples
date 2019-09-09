@@ -10,7 +10,7 @@ env:
 phases:
   pre_build:
     commands:
-      - service-one/cloudformation/buildspec_prebuild.sh
+      - codebuild-monorepo/service-one/cloudformation/buildspec_prebuild.sh
   post_build:
     commands:
-      - service-one/cloudformation/buildspec_postbuild.sh
+      - codebuild-monorepo/service-one/cloudformation/buildspec_postbuild.sh

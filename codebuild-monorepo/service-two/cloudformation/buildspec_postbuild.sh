@@ -1,6 +1,6 @@
 #!/bin/bash
 set -o errexit
-pushd "$(cd "$(dirname "$0")" ; pwd -P )/../../.." > /dev/null
+pushd "$(cd "$(dirname "$0")" ; pwd -P )/../.." > /dev/null
 
 if [[ -z "$AWS_NAMESPACE" ]]; then
     echo "AWS_NAMESPACE is not set"
