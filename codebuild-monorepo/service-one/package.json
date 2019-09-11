@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "description": "Service One",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.379.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.13",
+    "@types/node": "^10.11.4",
+    "typescript": "^3.1.1"
+  }
+}

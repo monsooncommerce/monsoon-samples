@@ -1,0 +1,6 @@
+.env.secret
+cloudformation/template-packaged.yaml
+cloudformation/template.yaml
+dist
+node_modules
+src/**/*.js

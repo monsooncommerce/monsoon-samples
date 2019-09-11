@@ -1,0 +1,4 @@
+node_modules
+**/*.js
+packages/database/ormconfig.json
+*.swp

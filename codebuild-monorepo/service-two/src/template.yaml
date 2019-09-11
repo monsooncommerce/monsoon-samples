@@ -1,0 +1,46 @@
+AWSTemplateFormatVersion : '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Parameters:
+  AwsNamespace:
+    Type: String
+    Description: Used to generate namespaced AWS resources
+
+  NodeEnv:
+    Type: String
+    Description: Node.js Environment.
+    Default: production
+
+Resources:
+  ServiceTwoStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: !Sub ${AwsNamespace}-service-two-stream
+      RetentionPeriodHours: 24
+      ShardCount: 1
+
+  ServiceTwoFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${AwsNamespace}-service-two
+      Handler: dist/index.handler
+      Runtime: nodejs8.10
+      CodeUri: ./
+      Environment:
+        Variables:
+          AWS_NAMESPACE: !Sub ${AwsNamespace}
+          NODE_ENV: !Sub ${NodeEnv}
+      Events:
+        Stream:
+          Type: Kinesis
+          Properties:
+            Stream: !GetAtt ServiceTwoStream.Arn
+            BatchSize: 1
+            StartingPosition: TRIM_HORIZON
+
+Outputs:
+  ServiceTwoStream:
+    Value: !Ref ServiceTwoStream
+    Description: Service Two Kinesis Stream
+    Export:
+      Name: !Sub ${AWS::StackName}-stream
