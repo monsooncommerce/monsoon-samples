@@ -15,12 +15,12 @@ bin/build.sh
 ```
 
 ### Running Development Environment
-Compile TypeScript source (`src`) into ES6 compatible JavaScript (`dist`) for an AWS Lambda Node.js 8.10 environment:
+Compile TypeScript source (`src`) into ES6 compatible JavaScript (`dist`) for an AWS Lambda Node.js 10.x environment:
 ```
 bin/compile.sh
 ```
 
-Start AWS Lambda Node.js 8.10 Emulator:
+Start AWS Lambda Node.js 10.x Emulator:
 ```
 bin/start.sh
 ```
