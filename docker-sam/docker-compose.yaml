@@ -1,10 +1,12 @@
-version: '3.6'
+version: '3.8'
 
 services:
   lambda_npm_app:
-    image: lambci/lambda:build-nodejs8.10
+    image: lambci/lambda:build-nodejs10.x
     volumes:
       - .:/var/task
+    networks:
+      - monsoon-samples_default
 
   sam_app:
     build: .
@@ -14,3 +16,9 @@ services:
     volumes:
       - .:/app
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - monsoon-samples_default
+
+networks:
+  monsoon-samples_default:
+    name: monsoon-samples_default
