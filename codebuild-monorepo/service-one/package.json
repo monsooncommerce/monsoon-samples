@@ -6,7 +6,7 @@
     "tsc": "tsc"
   },
   "dependencies": {
-    "aws-sdk": "^2.379.0"
+    "aws-sdk": "^2.814.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.13",
